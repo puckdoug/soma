@@ -1,3 +1,10 @@
+pub mod cli;
+
+use cli::Cli;
+
 fn main() {
-    println!("Hello, world!");
+    // Parse command line arguments
+    let cli = Cli::parse_args();
+
+    println!("{:?}", cli);
 }
