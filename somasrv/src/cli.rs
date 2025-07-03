@@ -9,7 +9,6 @@ use structopt::StructOpt;
     about = env!("CARGO_PKG_DESCRIPTION"),
     version = env!("CARGO_PKG_VERSION")
 )]
-
 pub struct Cli {
     /// Specify a configuration file
     #[structopt(short, long, parse(from_os_str))]

@@ -19,11 +19,10 @@ impl Default for Config {
 
 impl Config {
     pub fn from_file(pb: &Option<PathBuf>) -> Result<Self, ConfigError> {
-        let path: &Path;
-        match pb {
-            Some(p) => path = p.as_ref(),
-            None => path = &Path::new(DEFAULT_CFG_PATH),
-        }
+        let path: &Path = match pb {
+            Some(p) => p.as_ref(),
+            None => Path::new(DEFAULT_CFG_PATH),
+        };
 
         if !path.exists() {
             return Err(ConfigError::FileNotFound(path.to_path_buf()));

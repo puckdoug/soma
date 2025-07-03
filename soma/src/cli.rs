@@ -6,7 +6,6 @@ use structopt::StructOpt;
     about = env!("CARGO_PKG_DESCRIPTION"),
     version = env!("CARGO_PKG_VERSION")
 )]
-
 pub struct Cli {
     /// Describe what would be done without doing it
     #[structopt(long, short)]
