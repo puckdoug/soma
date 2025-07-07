@@ -60,3 +60,26 @@ impl Cli {
         Cli::from_args()
     }
 }
+
+pub fn print_usage() {
+    println!("SOMA - System Operations Management Agent");
+    println!();
+    println!("USAGE:");
+    println!("    soma [FLAGS] <SUBCOMMAND>");
+    println!();
+    println!("FLAGS:");
+    println!("    -n, --noaction    Describe what would be done without doing it");
+    println!("    -v, --verbose     Produce verbose output as the process runs");
+    println!("    -h, --help        Prints help information");
+    println!("    -V, --version     Prints version information");
+    println!();
+    println!("SUBCOMMANDS:");
+    println!("    help     Print out the usage information");
+    println!("    list     List all hosts that can be managed");
+    println!("    scan     Scan the network for hosts both managed and unmanaged");
+    println!("    check    Request a status report from a host or list of hosts");
+    println!();
+    println!("Each subcommand supports:");
+    println!("    --json    Return information in JSON format");
+    println!("    --csv     Return information in CSV format");
+}
