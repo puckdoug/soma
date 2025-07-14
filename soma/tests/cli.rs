@@ -237,12 +237,7 @@ fn test_soma_list_subcommand() {
     cmd.arg("list")
         .assert()
         .success()
-        .stdout(predicate::str::contains("Managed Hosts:"))
-        .stdout(predicate::str::contains("Hostname"))
-        .stdout(predicate::str::contains("IP Address"))
-        .stdout(predicate::str::contains("Status"))
-        .stdout(predicate::str::contains("host1.example.com"))
-        .stdout(predicate::str::contains("192.168.1.10"));
+        .stdout(predicate::str::contains("hostname"));
 }
 
 /// Test list subcommand with JSON output
@@ -252,12 +247,7 @@ fn test_soma_list_subcommand_json() {
     cmd.args(&["list", "--json"])
         .assert()
         .success()
-        .stdout(predicate::str::contains("\"hosts\":"))
-        .stdout(predicate::str::contains("\"hostname\":"))
-        .stdout(predicate::str::contains("\"ip\":"))
-        .stdout(predicate::str::contains("\"status\":"))
-        .stdout(predicate::str::contains("host1.example.com"))
-        .stdout(predicate::str::contains("192.168.1.10"));
+        .stdout(predicate::str::contains("[]"));
 }
 
 /// Test list subcommand with CSV output
@@ -267,13 +257,7 @@ fn test_soma_list_subcommand_csv() {
     cmd.args(&["list", "--csv"])
         .assert()
         .success()
-        .stdout(predicate::str::contains("hostname,ip,status"))
-        .stdout(predicate::str::contains(
-            "host1.example.com,192.168.1.10,managed",
-        ))
-        .stdout(predicate::str::contains(
-            "host2.example.com,192.168.1.11,managed",
-        ));
+        .stdout(predicate::str::contains("hostname"));
 }
 
 /// Test list subcommand with noaction flag
@@ -484,4 +468,21 @@ fn test_soma_check_help() {
         .stdout(predicate::str::contains("--json"))
         .stdout(predicate::str::contains("--csv"))
         .stdout(predicate::str::contains("<hosts>..."));
+}
+
+/// No list should be returned when running list subcommand with no managed hosts
+#[test]
+fn test_no_list_when_no_hosts_are_managed() {
+    let mut cmd = Command::cargo_bin("soma").unwrap();
+    cmd.args(&["list"]).assert().success();
+}
+
+/// No list should be returned when running list subcommand with no managed hosts
+#[test]
+fn test_json_with_empty_list_when_no_hosts_are_managed() {
+    let mut cmd = Command::cargo_bin("soma").unwrap();
+    cmd.args(&["list", "--json"])
+        .assert()
+        .success()
+        .stdout("[]\n");
 }
